@@ -54,7 +54,7 @@ export default function CreatePage({ user }: CreateProps) {
                   <div className="text-center">
                     <h2 className="text-2xl font-semibold">Image Preview</h2>
 
-                    <p className="mt-2 text-zinc-400">Paste image URL below</p>
+                    <p className="mt-2 text-zinc-400">Paste image URL </p>
                   </div>
                 </div>
               )}
