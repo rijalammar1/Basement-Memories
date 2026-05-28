@@ -124,7 +124,7 @@ export default function PostModal({ post, user, onClose }: PostModalProps) {
 
             {/* FOOTER */}
             <div className="border-t border-zinc-800 p-5">
-              <p className="text-sm text-zinc-400">{post.likesCount || 0} likes</p>
+              <p className="text-sm text-zinc-400">{post.likesCount || 0} like</p>
             </div>
           </div>
         </div>
