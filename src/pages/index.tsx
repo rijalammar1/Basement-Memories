@@ -6,7 +6,7 @@ export default function Home() {
     <main className="flex min-h-screen items-center justify-center bg-black px-6 text-white">
       <div className="grid w-full max-w-5xl items-center gap-12 lg:grid-cols-2">
         {/* LEFT */}
-        <div className="space-y-8">
+        <div className="space-y-7">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
