@@ -15,7 +15,7 @@ export default function useCreatePostForm(token: string) {
   const handleSubmit = async () => {
     try {
       if (!caption.trim() || !imageUrl.trim()) {
-        alert('Caption & Image URL wajib diisi');
+        alert('Caption & Image URL harus diisi');
         return;
       }
 
