@@ -58,7 +58,7 @@ export default function UserDetailPage({ loggedUser, targetUser, posts }: Props)
       <section className="flex-1 px-10 py-10">
         <div className="mx-auto max-w-5xl">
           {/* PROFILE */}
-          <ProfileHeader user={targetUser} postsCount={posts.length} />
+          <ProfileHeader user={targetUser} postsCount={posts.length} isOwner={false} />
 
           {/* POSTS */}
           <div className="mt-10">

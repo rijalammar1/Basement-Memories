@@ -16,6 +16,7 @@ export default function useLogin() {
       setLoading(true);
 
       const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
+
       const apiKEY = process.env.NEXT_PUBLIC_API_KEY;
 
       const response = await axios.post(`${apiURL}/api/v1/login`, payload, {
@@ -24,9 +25,25 @@ export default function useLogin() {
         },
       });
 
+      /*
+        TOKEN
+      */
       const token = response.data.token;
 
+      /*
+        USER
+      */
+      const user = response.data.user;
+
+      /*
+        SAVE TOKEN
+      */
       document.cookie = `token=${token}; path=/`;
+
+      /*
+        SAVE USER ID
+      */
+      localStorage.setItem('userId', user.id);
 
       toast.success('Login successful');
 

@@ -53,6 +53,7 @@ export default function ProfilePage({ user, posts }: ProfileProps) {
             user={user}
             postsCount={posts.length}
             onEdit={() => setOpenEditModal(true)}
+            isOwner={true}
           />
 
           {/* POSTS */}

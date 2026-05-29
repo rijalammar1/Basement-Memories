@@ -14,6 +14,16 @@ export default function PostModal({ post, user, onClose }: PostModalProps) {
     user,
   });
 
+  /*
+    LOGGED USER
+  */
+  const loggedUserId = localStorage.getItem('userId');
+
+  /*
+    OWNER CHECK
+  */
+  const isOwner = loggedUserId === post.user?.id;
+
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-10">
@@ -23,10 +33,12 @@ export default function PostModal({ post, user, onClose }: PostModalProps) {
             <img src={modal.imageUrl} alt="post" className="h-full w-full object-cover" />
           </div>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT */}
           <div className="flex w-[420px] flex-col border-l border-zinc-800">
             <PostModalHeader
+              post={post}
               user={user}
+              isOwner={isOwner}
               showMenu={modal.showMenu}
               setShowMenu={modal.setShowMenu}
               setShowUpdateModal={modal.setShowUpdateModal}
@@ -34,7 +46,7 @@ export default function PostModal({ post, user, onClose }: PostModalProps) {
               onClose={onClose}
             />
 
-            <PostModalContent user={user} caption={modal.caption} comments={modal.comments} />
+            <PostModalContent post={post} caption={modal.caption} comments={modal.comments} />
 
             <PostModalFooter
               liked={modal.liked}
@@ -48,7 +60,8 @@ export default function PostModal({ post, user, onClose }: PostModalProps) {
         </div>
       </div>
 
-      {modal.showUpdateModal && (
+      {/* UPDATE MODAL */}
+      {modal.showUpdateModal && isOwner && (
         <UpdatePostModal
           post={post}
           user={user}

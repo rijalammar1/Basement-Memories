@@ -1,5 +1,3 @@
-import Button from '@/components/ui/Button';
-
 import { User } from '@/types/post';
 
 interface ProfileHeaderProps {
@@ -8,65 +6,60 @@ interface ProfileHeaderProps {
   postsCount: number;
 
   onEdit?: () => void;
+
+  isOwner?: boolean;
 }
 
-export default function ProfileHeader({ user, postsCount, onEdit }: ProfileHeaderProps) {
+export default function ProfileHeader({
+  user,
+  postsCount,
+  onEdit,
+  isOwner = false,
+}: ProfileHeaderProps) {
   return (
-    <div className="flex items-start gap-10 border-b border-zinc-800 pb-10">
+    <div className="flex items-center gap-10 border-b border-zinc-800 pb-10">
       {/* PROFILE IMAGE */}
       <img
-        src={user?.profilePictureUrl || 'https://i.pravatar.cc/300'}
+        src={user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
         alt="profile"
         className="h-36 w-36 rounded-full object-cover"
       />
 
-      {/* PROFILE INFO */}
+      {/* INFO */}
       <div className="flex-1">
-        {/* TOP */}
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-4">
-              <h1 className="text-4xl font-bold">{user?.name || 'No Name'}</h1>
+        <div className="flex items-center gap-4">
+          <h1 className="text-4xl font-bold">{user?.name}</h1>
 
-              <p className="text-2xl text-zinc-400">@{user?.username || 'username'}</p>
-            </div>
+          <p className="text-2xl text-zinc-400">@{user?.username}</p>
 
-            {/* BIO */}
-            {user?.bio && <p className="mt-4 text-zinc-300">{user.bio}</p>}
-
-            {/* WEBSITE */}
-            {user?.website && (
-              <a
-                href={user.website}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-2 block text-blue-400 hover:underline"
-              >
-                {user.website}
-              </a>
-            )}
-          </div>
-
-          {/* EDIT BUTTON */}
-          <div className="w-[160px]">
-            <Button title="Edit Profile" onClick={onEdit} />
-          </div>
+          {/* ONLY OWNER CAN EDIT */}
+          {isOwner && (
+            <button
+              onClick={onEdit}
+              className="rounded-2xl border border-zinc-700 px-5 py-2 transition hover:bg-zinc-800"
+            >
+              Edit Profile
+            </button>
+          )}
         </div>
 
         {/* STATS */}
-        <div className="mt-6 flex gap-8">
+        <div className="mt-5 flex gap-8">
           <p>
             <span className="font-bold">{postsCount}</span> posts
           </p>
 
           <p>
-            <span className="font-bold">{user?.totalFollowers || 0}</span> followers
+            <span className="font-bold">0</span> followers
           </p>
 
           <p>
-            <span className="font-bold">{user?.totalFollowing || 0}</span> following
+            <span className="font-bold">0</span> following
           </p>
         </div>
+
+        {/* BIO */}
+        <p className="mt-5 text-zinc-400">{user?.bio || 'No bio yet'}</p>
       </div>
     </div>
   );
