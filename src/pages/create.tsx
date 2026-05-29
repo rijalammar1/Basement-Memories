@@ -7,6 +7,7 @@ import useCreatePost from '@/hooks/useCreatePost';
 import { withAuth } from '@/utils/withAuth';
 
 import { CreateProps } from '@/types/post';
+import { IoClose } from 'react-icons/io5';
 
 export const getServerSideProps = withAuth;
 
@@ -37,7 +38,12 @@ export default function CreatePage({ user }: CreateProps) {
           <div className="flex items-center justify-between border-b border-zinc-800 px-8 py-5">
             <h1 className="text-2xl font-bold">Create New Post</h1>
 
-            <button className="text-zinc-400 hover:text-white">Draft</button>
+            <button
+              onClick={() => window.history.back()}
+              className="rounded-full p-2 text-zinc-400 transition hover:bg-zinc-800 hover:text-white"
+            >
+              <IoClose size={24} />
+            </button>
           </div>
 
           <div className="grid min-h-[650px] grid-cols-2">
