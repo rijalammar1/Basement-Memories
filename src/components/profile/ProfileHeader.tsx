@@ -40,9 +40,6 @@ export default function ProfileHeader({ user, postsCount, isOwner, onEdit }: Pro
         {/* USERNAME */}
         <p className="mt-2 text-lg text-zinc-400">@{user?.username}</p>
 
-        {/* EMAIL */}
-        <p className="mt-2 text-zinc-500">{user?.email || 'No email'}</p>
-
         {/* BIO */}
         {user?.bio && <p className="mt-5 text-zinc-300">{user.bio}</p>}
 
