@@ -4,9 +4,6 @@ const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const apiKEY = process.env.NEXT_PUBLIC_API_KEY;
 
-/* =========================
-   CREATE POST
-========================= */
 export const createPost = async (
   token: string,
   payload: {
@@ -25,9 +22,6 @@ export const createPost = async (
   return response.data;
 };
 
-/* =========================
-   GET POSTS
-========================= */
 export const getFollowingPosts = async (token: string) => {
   const response = await axios.get(`${apiURL}/api/v1/following-post?size=20&page=1`, {
     headers: {
@@ -39,9 +33,6 @@ export const getFollowingPosts = async (token: string) => {
   return response.data.data.posts || [];
 };
 
-/* =========================
-   UPDATE POST
-========================= */
 export const updatePost = async (
   token: string,
   postId: string,
@@ -61,9 +52,6 @@ export const updatePost = async (
   return response.data;
 };
 
-/* =========================
-   DELETE POST
-========================= */
 export const deletePost = async (token: string, postId: string) => {
   const response = await axios.delete(`${apiURL}/api/v1/delete-post/${postId}`, {
     headers: {
@@ -75,9 +63,6 @@ export const deletePost = async (token: string, postId: string) => {
   return response.data;
 };
 
-/* =========================
-   LIKE POST
-========================= */
 export const likePost = async (token: string, postId: string) => {
   const response = await axios.post(
     `${apiURL}/api/v1/like`,
@@ -96,9 +81,6 @@ export const likePost = async (token: string, postId: string) => {
   return response.data;
 };
 
-/* =========================
-   UNLIKE POST
-========================= */
 export const unlikePost = async (token: string, postId: string) => {
   const response = await axios.post(
     `${apiURL}/api/v1/unlike`,
@@ -117,9 +99,6 @@ export const unlikePost = async (token: string, postId: string) => {
   return response.data;
 };
 
-/* =========================
-   CREATE COMMENT
-========================= */
 export const createComment = async (
   token: string,
   payload: {
@@ -138,9 +117,6 @@ export const createComment = async (
   return response.data;
 };
 
-/* =========================
-   DELETE COMMENT
-========================= */
 export const deleteComment = async (token: string, commentId: string) => {
   const response = await axios.delete(`${apiURL}/api/v1/delete-comment/${commentId}`, {
     headers: {
