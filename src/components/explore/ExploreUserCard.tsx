@@ -24,7 +24,9 @@ export default function ExploreUserCard({ item, loading, onFollow }: Props) {
         <div>
           <h2 className="text-xl font-semibold">{item?.name || 'No Name'}</h2>
 
-          <p className="text-zinc-400">@{item?.username || 'username'}</p>
+          <p className="text-zinc-400">
+            @{item?.username || item?.name?.toLowerCase().replace(/\s/g, '')}
+          </p>
         </div>
       </Link>
 
