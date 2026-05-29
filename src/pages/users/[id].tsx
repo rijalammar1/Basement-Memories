@@ -1,8 +1,12 @@
+import { useState } from 'react';
+
 import Sidebar from '@/components/home/Sidebar';
 
 import ProfileHeader from '@/components/profile/ProfileHeader';
 
 import ProfilePostGrid from '@/components/profile/ProfilePostGrid';
+
+import PostModal from '@/components/post/PostModal';
 
 import { withAuth } from '@/utils/withAuth';
 
@@ -19,14 +23,8 @@ export async function getServerSideProps(context: any) {
 
   const { id } = context.params;
 
-  /*
-    TARGET USER
-  */
   const targetUser = await getUserById(token, id);
 
-  /*
-    TARGET POSTS
-  */
   const posts = await getUserPosts(token, id);
 
   return {
@@ -49,6 +47,8 @@ interface Props {
 }
 
 export default function UserDetailPage({ loggedUser, targetUser, posts }: Props) {
+  const [selectedPost, setSelectedPost] = useState<any>(null);
+
   return (
     <main className="flex min-h-screen bg-black text-white">
       {/* SIDEBAR */}
@@ -62,10 +62,15 @@ export default function UserDetailPage({ loggedUser, targetUser, posts }: Props)
 
           {/* POSTS */}
           <div className="mt-10">
-            <ProfilePostGrid posts={posts} onSelectPost={() => {}} />
+            <ProfilePostGrid posts={posts} onSelectPost={(post) => setSelectedPost(post)} />
           </div>
         </div>
       </section>
+
+      {/* MODAL */}
+      {selectedPost && (
+        <PostModal post={selectedPost} user={targetUser} onClose={() => setSelectedPost(null)} />
+      )}
     </main>
   );
 }

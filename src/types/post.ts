@@ -16,8 +16,18 @@ export interface User {
   website?: string;
 }
 
+export interface Comment {
+  id?: string;
+
+  comment: string;
+
+  createdAt?: string;
+
+  user?: User;
+}
+
 export interface Post {
-  id: number;
+  id: string;
 
   caption: string;
 
@@ -25,7 +35,13 @@ export interface Post {
 
   likesCount?: number;
 
+  commentsCount?: number;
+
+  isLiked?: boolean;
+
   user?: User;
+
+  comments?: Comment[];
 }
 
 export interface CreateProps {
