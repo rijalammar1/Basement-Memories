@@ -65,7 +65,12 @@ export default function ProfilePage({ user, posts }: ProfileProps) {
 
       {/* POST MODAL */}
       {selectedPost && (
-        <PostModal post={selectedPost} user={user} onClose={() => setSelectedPost(null)} />
+        <PostModal
+          post={selectedPost}
+          user={user}
+          loggedUser={user}
+          onClose={() => setSelectedPost(null)}
+        />
       )}
 
       {/* EDIT PROFILE MODAL */}

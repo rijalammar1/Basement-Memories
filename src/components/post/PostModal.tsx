@@ -1,5 +1,6 @@
-import UpdatePostModal from './UpdatePostModal';
+import { useEffect, useState } from 'react';
 
+import UpdatePostModal from './UpdatePostModal';
 import PostModalHeader from './PostModalHeader';
 import PostModalContent from './PostModalContent';
 import PostModalFooter from './PostModalFooter';
@@ -8,20 +9,23 @@ import usePostModal from '@/hooks/usePostModal';
 
 import { PostModalProps } from '@/types/post';
 
-export default function PostModal({ post, user, onClose }: PostModalProps) {
+export default function PostModal({ post, user, loggedUser, onClose }: PostModalProps) {
   const modal = usePostModal({
     post,
     user,
+    loggedUser,
   });
 
-  /*
-    LOGGED USER
-  */
-  const loggedUserId = localStorage.getItem('userId');
+  const [loggedUserId, setLoggedUserId] = useState('');
 
-  /*
-    OWNER CHECK
-  */
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+      setLoggedUserId(userId);
+    }
+  }, []);
+
   const isOwner = loggedUserId === post.user?.id;
 
   return (
@@ -60,7 +64,6 @@ export default function PostModal({ post, user, onClose }: PostModalProps) {
         </div>
       </div>
 
-      {/* UPDATE MODAL */}
       {modal.showUpdateModal && isOwner && (
         <UpdatePostModal
           post={post}

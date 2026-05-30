@@ -69,7 +69,12 @@ export default function UserDetailPage({ loggedUser, targetUser, posts }: Props)
 
       {/* MODAL */}
       {selectedPost && (
-        <PostModal post={selectedPost} user={targetUser} onClose={() => setSelectedPost(null)} />
+        <PostModal
+          post={selectedPost}
+          user={targetUser}
+          loggedUser={loggedUser}
+          onClose={() => setSelectedPost(null)}
+        />
       )}
     </main>
   );

@@ -71,6 +71,8 @@ export interface PostModalProps {
 
   user: User | null;
 
+  loggedUser?: User | null;
+
   onClose: () => void;
 }
 
