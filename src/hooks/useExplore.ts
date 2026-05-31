@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
-
 import toast from 'react-hot-toast';
-
 import { getCookie } from 'cookies-next';
-
 import { getAllUsers, getProfile } from '@/services/user.service';
-
-import { followUser } from '@/services/follow.service';
-
+import { followUser, unfollowUser, getMyFollowing } from '@/services/follow.service';
 import { User } from '@/types/post';
 
 export default function useExplore() {
@@ -37,7 +32,16 @@ export default function useExplore() {
 
       const allUsers = await getAllUsers(String(token));
 
-      const filtered = allUsers.filter((item: any) => item?.id !== profile?.id);
+      const myFollowing = await getMyFollowing(String(token));
+
+      const followingIds = myFollowing?.data?.users?.map((user: any) => user.id) || [];
+
+      const filtered = allUsers
+        .filter((item: any) => item?.id !== profile?.id)
+        .map((item: any) => ({
+          ...item,
+          isFollowing: followingIds.includes(item.id),
+        }));
 
       setUsers(filtered);
     } catch (error) {
@@ -46,10 +50,6 @@ export default function useExplore() {
       toast.error('Failed fetch users');
     }
   };
-
-  /*
-    SEARCH USER
-  */
   const handleSearch = (value: string) => {
     setKeyword(value);
 
@@ -62,9 +62,9 @@ export default function useExplore() {
     const keywordLower = value.toLowerCase();
 
     const result = users.filter((item: any) => {
-      const username = item?.username?.toString().toLowerCase() || '';
+      const username = item?.username?.toLowerCase() || '';
 
-      const name = item?.name?.toString().toLowerCase() || '';
+      const name = item?.name?.toLowerCase() || '';
 
       return username.includes(keywordLower) || name.includes(keywordLower);
     });
@@ -72,28 +72,54 @@ export default function useExplore() {
     setFilteredUsers(result);
   };
 
-  /*
-    FOLLOW
-  */
-  const handleFollow = async (userId: number) => {
+  const handleFollow = async (userId: string, isFollowing: boolean) => {
     try {
       const token = getCookie('token');
 
       if (!token) {
         toast.error('Unauthorized');
-
         return;
       }
 
       setLoading(true);
 
-      // await followUser(String(token), userId);
+      if (isFollowing) {
+        await unfollowUser(String(token), userId);
 
-      toast.success('Follow success');
+        toast.success('Unfollow success');
+      } else {
+        await followUser(String(token), userId);
+
+        toast.success('Follow success');
+      }
+
+      // update users utama
+      const updatedUsers = users.map((item) =>
+        item.id === userId
+          ? {
+              ...item,
+              isFollowing: !isFollowing,
+            }
+          : item,
+      );
+
+      setUsers(updatedUsers);
+
+      // update hasil search yang sedang tampil
+      setFilteredUsers((prev) =>
+        prev.map((item) =>
+          item.id === userId
+            ? {
+                ...item,
+                isFollowing: !isFollowing,
+              }
+            : item,
+        ),
+      );
     } catch (error) {
       console.log(error);
 
-      toast.error('Failed follow user');
+      toast.error('Failed');
     } finally {
       setLoading(false);
     }
