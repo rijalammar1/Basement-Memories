@@ -14,6 +14,10 @@ export interface User {
   bio?: string;
 
   website?: string;
+
+  totalFollowers?: number;
+
+  totalFollowing?: number;
 }
 
 export interface Comment {

@@ -1,16 +1,14 @@
 import { useState } from 'react';
 
 import Sidebar from '@/components/home/Sidebar';
-
 import ProfileHeader from '@/components/profile/ProfileHeader';
-
 import ProfilePostGrid from '@/components/profile/ProfilePostGrid';
-
 import PostModal from '@/components/post/PostModal';
 
 import { withAuth } from '@/utils/withAuth';
 
 import { getUserById, getUserPosts } from '@/services/user.service';
+import { getMyFollowing } from '@/services/follow.service';
 
 export async function getServerSideProps(context: any) {
   const auth = await withAuth(context);
@@ -27,47 +25,52 @@ export async function getServerSideProps(context: any) {
 
   const posts = await getUserPosts(token, id);
 
+  const followingRes = await getMyFollowing(token);
+
+  const followingUsers = followingRes?.data?.users || [];
+
+  const isFollowing = followingUsers.some((item: any) => item.id === targetUser.id);
+
   return {
     props: {
       loggedUser: user,
-
       targetUser,
-
       posts,
+      isFollowing,
     },
   };
 }
 
 interface Props {
   loggedUser: any;
-
   targetUser: any;
-
   posts: any[];
+  isFollowing: boolean;
 }
 
-export default function UserDetailPage({ loggedUser, targetUser, posts }: Props) {
+export default function UserDetailPage({ loggedUser, targetUser, posts, isFollowing }: Props) {
   const [selectedPost, setSelectedPost] = useState<any>(null);
 
   return (
     <main className="flex min-h-screen bg-black text-white">
-      {/* SIDEBAR */}
       <Sidebar user={loggedUser} />
 
-      {/* CONTENT */}
       <section className="flex-1 px-10 py-10">
         <div className="mx-auto max-w-5xl">
-          {/* PROFILE */}
-          <ProfileHeader user={targetUser} postsCount={posts.length} isOwner={false} />
+          <ProfileHeader
+            user={targetUser}
+            loggedUser={loggedUser}
+            postsCount={posts.length}
+            isOwner={false}
+            isFollowing={isFollowing}
+          />
 
-          {/* POSTS */}
           <div className="mt-10">
             <ProfilePostGrid posts={posts} onSelectPost={(post) => setSelectedPost(post)} />
           </div>
         </div>
       </section>
 
-      {/* MODAL */}
       {selectedPost && (
         <PostModal
           post={selectedPost}
