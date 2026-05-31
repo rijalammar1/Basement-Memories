@@ -1,4 +1,4 @@
-import { getToken } from './auth';
+import { getToken } from './getToken';
 
 import { getUser } from '@/services/auth.service';
 
