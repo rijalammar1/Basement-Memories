@@ -1,26 +1,31 @@
-const users = [
-  'https://i.pravatar.cc/100?img=1',
-  'https://i.pravatar.cc/100?img=2',
-  'https://i.pravatar.cc/100?img=3',
-  'https://i.pravatar.cc/100?img=4',
-  'https://i.pravatar.cc/100?img=5',
-];
+import useStories from '@/hooks/useStories';
+import { useRouter } from 'next/router';
 
 export default function Stories() {
+  const router = useRouter();
+
+  const { stories, loading } = useStories();
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <div className="flex gap-5 overflow-x-auto rounded-3xl border border-zinc-800 bg-zinc-950 p-5">
-      {users.map((user, index) => (
-        <div key={index} className="flex min-w-fit flex-col items-center gap-2">
+      {stories.map((story) => (
+        <button
+          key={story.id}
+          onClick={() => router.push(`/story/${story.id}`)}
+          className="flex min-w-fit flex-col items-center gap-2"
+        >
           <div className="rounded-full bg-gradient-to-tr from-pink-500 to-purple-500 p-[3px]">
             <img
-              src={user}
-              alt="story"
+              src={story.user?.profilePictureUrl}
+              alt={story.user?.username}
               className="h-16 w-16 rounded-full border-2 border-black object-cover"
             />
           </div>
 
-          <p className="text-sm text-zinc-300">user{index + 1}</p>
-        </div>
+          <p className="text-sm text-zinc-300">@{story.user?.username}</p>
+        </button>
       ))}
     </div>
   );

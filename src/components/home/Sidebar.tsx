@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { FiHome, FiCompass, FiPlusSquare, FiUser } from 'react-icons/fi';
 
+import { MdOutlineAddCircle } from 'react-icons/md';
 import { User } from '@/types/post';
 
 interface SidebarProps {
@@ -12,33 +13,31 @@ export default function Sidebar({ user }: SidebarProps) {
   const menus = [
     {
       name: 'Home',
-
       href: '/home',
-
       icon: <FiHome size={22} />,
     },
 
     {
       name: 'Explore',
-
       href: '/explore',
-
       icon: <FiCompass size={22} />,
     },
 
     {
-      name: 'Create',
-
+      name: 'Create Post',
       href: '/create',
-
       icon: <FiPlusSquare size={22} />,
     },
 
     {
+      name: 'Create Story',
+      href: '/story/create',
+      icon: <MdOutlineAddCircle size={22} />,
+    },
+
+    {
       name: 'Profile',
-
       href: '/profile',
-
       icon: <FiUser size={22} />,
     },
   ];
