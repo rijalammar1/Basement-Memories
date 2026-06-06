@@ -42,10 +42,10 @@ export default function HomePage({ user, posts }: HomeProps) {
     <main className="flex min-h-screen bg-black text-white">
       <Sidebar user={user} />
 
-      <section className="flex-1 overflow-y-auto">
+      <section className="flex-1 overflow-y-auto pb-24 md:pb-0">
         <Topbar />
 
-        <div className="mx-auto max-w-3xl px-6 py-6">
+        <div className="mx-auto max-w-3xl px-4 py-4 md:px-6 md:py-6">
           <StoryBar />
 
           <div className="mt-6">

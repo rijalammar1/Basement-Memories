@@ -43,10 +43,10 @@ export default function CreatePostForm({ user }: Props) {
   };
 
   return (
-    <div className="w-full max-w-5xl overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950">
+    <div className="w-full overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 md:max-w-5xl md:rounded-3xl">
       {/* HEADER */}
-      <div className="flex items-center justify-between border-b border-zinc-800 px-8 py-5">
-        <h1 className="text-2xl font-bold">Create New Post</h1>
+      <div className="flex items-center justify-between border-b border-zinc-800 px-4 py-4 md:px-8 md:py-5">
+        <h1 className="text-lg font-bold md:text-2xl">Create New Post</h1>
 
         <button
           onClick={() => router.back()}
@@ -57,9 +57,9 @@ export default function CreatePostForm({ user }: Props) {
       </div>
 
       {/* CONTENT */}
-      <div className="grid min-h-[650px] grid-cols-2">
+      <div className="grid grid-cols-1 md:min-h-[650px] md:grid-cols-2">
         {/* LEFT */}
-        <div className="border-r border-zinc-800 p-8">
+        <div className="border-b border-zinc-800 p-4 md:border-r md:border-b-0 md:p-8">
           <PostImagePreview imageUrl={imageUrl} />
 
           <input
@@ -67,22 +67,22 @@ export default function CreatePostForm({ user }: Props) {
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="https://example.com/image.jpg"
-            className="mt-6 w-full rounded-2xl border border-zinc-700 bg-black px-5 py-4 outline-none focus:border-white"
+            className="mt-4 w-full rounded-2xl border border-zinc-700 bg-black px-4 py-3 outline-none focus:border-white md:mt-6 md:px-5 md:py-4"
           />
         </div>
 
         {/* RIGHT */}
-        <div className="flex flex-col p-8">
+        <div className="flex flex-col p-4 md:p-8">
           <PostAuthor user={user} />
 
           <textarea
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             placeholder="Write your caption..."
-            className="h-[300px] resize-none rounded-2xl border border-zinc-800 bg-zinc-900 p-5 outline-none"
+            className="mt-4 h-[180px] resize-none rounded-2xl border border-zinc-800 bg-zinc-900 p-4 outline-none md:h-[300px] md:p-5"
           />
 
-          <div className="mt-auto">
+          <div className="mt-6 md:mt-auto">
             <Button title="Publish Post" loading={loading} onClick={handleSubmit} />
           </div>
         </div>

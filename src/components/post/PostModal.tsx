@@ -30,15 +30,15 @@ export default function PostModal({ post, user, loggedUser, onClose }: PostModal
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-10">
-        <div className="relative flex h-[90vh] w-full max-w-6xl overflow-hidden rounded-3xl bg-zinc-950">
+      <div className="fixed inset-0 z-50 bg-black/80 md:flex md:items-center md:justify-center md:p-10">
+        <div className="relative flex h-screen w-full flex-col overflow-hidden bg-zinc-950 md:h-[90vh] md:max-w-6xl md:flex-row md:rounded-3xl">
           {/* IMAGE */}
-          <div className="flex flex-1 items-center justify-center bg-black">
+          <div className="h-[40vh] bg-black md:h-auto md:flex-1">
             <img src={modal.imageUrl} alt="post" className="h-full w-full object-cover" />
           </div>
 
-          {/* RIGHT */}
-          <div className="flex w-[420px] flex-col border-l border-zinc-800">
+          {/* RIGHT SIDE */}
+          <div className="flex flex-1 flex-col border-t border-zinc-800 md:w-[420px] md:border-t-0 md:border-l">
             <PostModalHeader
               post={post}
               user={user}

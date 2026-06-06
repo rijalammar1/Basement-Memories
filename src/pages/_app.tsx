@@ -8,28 +8,37 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Toaster
-        position="top-right"
+        position="top-center"
+        gutter={8}
+        containerStyle={{
+          top: 16,
+          left: 16,
+          right: 16,
+        }}
         toastOptions={{
           duration: 3000,
+
           style: {
             background: '#09090b',
-            color: '#ffff',
+            color: '#fff',
             border: '1px solid #27272a',
             padding: '14px 18px',
             borderRadius: '14px',
+            maxWidth: '500px',
+            width: '100%',
           },
 
           success: {
             iconTheme: {
               primary: '#22c55e',
-              secondary: '#ffff',
+              secondary: '#fff',
             },
           },
 
           error: {
             iconTheme: {
               primary: '#ef4444',
-              secondary: '#ffff',
+              secondary: '#fff',
             },
           },
         }}

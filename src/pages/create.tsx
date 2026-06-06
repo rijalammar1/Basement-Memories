@@ -13,7 +13,7 @@ export default function CreatePage({ user }: CreateProps) {
     <main className="flex min-h-screen bg-black text-white">
       <Sidebar user={user} />
 
-      <section className="flex flex-1 items-center justify-center p-10">
+      <section className="flex flex-1 justify-center p-4 pb-28 md:p-10">
         <CreatePostForm user={user} />
       </section>
     </main>

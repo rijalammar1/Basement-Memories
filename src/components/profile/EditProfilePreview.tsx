@@ -8,17 +8,17 @@ interface Props {
 
 export default function EditProfilePreview({ name, username, profilePictureUrl }: Props) {
   return (
-    <div className="mb-8 flex items-center gap-5">
+    <div className="mb-6 flex flex-col items-center gap-4 text-center md:mb-8 md:flex-row md:gap-5 md:text-left">
       <img
         src={profilePictureUrl || 'https://i.pravatar.cc/150'}
         alt="profile"
-        className="h-24 w-24 rounded-full object-cover"
+        className="h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
       />
 
-      <div>
-        <h2 className="text-2xl font-semibold">{name || 'No Name'}</h2>
+      <div className="min-w-0">
+        <h2 className="truncate text-xl font-semibold md:text-2xl">{name || 'No Name'}</h2>
 
-        <p className="text-zinc-400">@{username || 'username'}</p>
+        <p className="truncate text-sm text-zinc-400 md:text-base">@{username || 'username'}</p>
       </div>
     </div>
   );

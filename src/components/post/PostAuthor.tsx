@@ -6,17 +6,17 @@ interface Props {
 
 export default function PostAuthor({ user }: Props) {
   return (
-    <div className="mb-6 flex items-center gap-4">
+    <div className="mb-4 flex items-center gap-3 md:mb-6 md:gap-4">
       <img
         src={user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
         alt="profile"
-        className="h-14 w-14 rounded-full object-cover"
+        className="h-12 w-12 rounded-full object-cover md:h-14 md:w-14"
       />
 
       <div>
-        <h2 className="font-semibold">{user?.name}</h2>
+        <h2 className="font-semibold text-white">@{user?.username}</h2>
 
-        <p className="text-sm text-zinc-400">@{user?.username}</p>
+        <p className="text-sm text-zinc-400">Create new post</p>
       </div>
     </div>
   );

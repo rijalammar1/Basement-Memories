@@ -8,7 +8,7 @@ interface Props {
 
 export default function EditProfileForm({ form, handleChange }: Props) {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-3 md:gap-4">
       {EDIT_PROFILE_FIELDS.map((field) => (
         <input
           key={field.name}
@@ -16,7 +16,7 @@ export default function EditProfileForm({ form, handleChange }: Props) {
           value={form[field.name] || ''}
           onChange={handleChange}
           placeholder={field.placeholder}
-          className="rounded-2xl bg-zinc-800 px-5 py-4 outline-none"
+          className="w-full rounded-xl bg-zinc-800 px-4 py-3 text-sm text-white transition outline-none focus:ring-2 focus:ring-white/20 md:rounded-2xl md:px-5 md:py-4 md:text-base"
         />
       ))}
 
@@ -25,7 +25,7 @@ export default function EditProfileForm({ form, handleChange }: Props) {
         value={form.bio}
         onChange={handleChange}
         placeholder="Bio"
-        className="min-h-[120px] rounded-2xl bg-zinc-800 px-5 py-4 outline-none"
+        className="min-h-[100px] rounded-xl bg-zinc-800 px-4 py-3 text-sm text-white transition outline-none focus:ring-2 focus:ring-white/20 md:min-h-[120px] md:rounded-2xl md:px-5 md:py-4 md:text-base"
       />
 
       <input
@@ -33,7 +33,7 @@ export default function EditProfileForm({ form, handleChange }: Props) {
         value={form.website}
         onChange={handleChange}
         placeholder="Website"
-        className="rounded-2xl bg-zinc-800 px-5 py-4 outline-none"
+        className="w-full rounded-xl bg-zinc-800 px-4 py-3 text-sm text-white transition outline-none focus:ring-2 focus:ring-white/20 md:rounded-2xl md:px-5 md:py-4 md:text-base"
       />
     </div>
   );

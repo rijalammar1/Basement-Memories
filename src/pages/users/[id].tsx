@@ -8,6 +8,7 @@ import PostModal from '@/components/post/PostModal';
 import { withAuth } from '@/utils/withAuth';
 
 import { getUserById, getUserPosts } from '@/services/user.service';
+
 import { getMyFollowing } from '@/services/follow.service';
 
 export async function getServerSideProps(context: any) {
@@ -55,7 +56,7 @@ export default function UserDetailPage({ loggedUser, targetUser, posts, isFollow
     <main className="flex min-h-screen bg-black text-white">
       <Sidebar user={loggedUser} />
 
-      <section className="flex-1 px-10 py-10">
+      <section className="flex-1 px-4 py-4 pb-28 md:px-10 md:py-10">
         <div className="mx-auto max-w-5xl">
           <ProfileHeader
             user={targetUser}
@@ -65,7 +66,7 @@ export default function UserDetailPage({ loggedUser, targetUser, posts, isFollow
             isFollowing={isFollowing}
           />
 
-          <div className="mt-10">
+          <div className="mt-6 md:mt-10">
             <ProfilePostGrid posts={posts} onSelectPost={(post) => setSelectedPost(post)} />
           </div>
         </div>

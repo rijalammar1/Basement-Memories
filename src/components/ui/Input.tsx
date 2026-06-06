@@ -11,7 +11,7 @@ const Input = ({ label, ...props }: InputProps) => {
 
       <input
         {...props}
-        className="w-full rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-white transition focus:ring-2 focus:ring-white focus:outline-none"
+        className="w-full rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-white transition outline-none focus:border-white focus:ring-2 focus:ring-white/20 md:text-base"
       />
     </div>
   );

@@ -6,10 +6,14 @@ export default function Stories() {
 
   const { stories, loading } = useStories();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4">Loading stories...</div>
+    );
+  }
 
   return (
-    <div className="flex gap-5 overflow-x-auto rounded-3xl border border-zinc-800 bg-zinc-950 p-5">
+    <div className="flex gap-3 overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-950 p-4 md:gap-5 md:rounded-3xl md:p-5">
       {stories.map((story) => (
         <button
           key={story.id}
@@ -20,11 +24,13 @@ export default function Stories() {
             <img
               src={story.user?.profilePictureUrl}
               alt={story.user?.username}
-              className="h-16 w-16 rounded-full border-2 border-black object-cover"
+              className="h-12 w-12 rounded-full border-2 border-black object-cover md:h-16 md:w-16"
             />
           </div>
 
-          <p className="text-sm text-zinc-300">@{story.user?.username}</p>
+          <p className="max-w-[60px] truncate text-xs text-zinc-300 md:max-w-[80px] md:text-sm">
+            {story.user?.username}
+          </p>
         </button>
       ))}
     </div>

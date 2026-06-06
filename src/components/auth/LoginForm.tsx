@@ -24,10 +24,10 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
-      <h1 className="mb-8 text-4xl font-bold text-white">Welcome Back</h1>
+    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl md:rounded-3xl md:p-8">
+      <h1 className="mb-6 text-3xl font-bold text-white md:mb-8 md:text-4xl">Welcome Back</h1>
 
-      <div className="space-y-5">
+      <div className="space-y-4 md:space-y-5">
         <Input
           label="Email"
           type="email"
@@ -47,9 +47,9 @@ const LoginForm = () => {
         <Button title="Login" loading={loading} onClick={() => login(formData)} />
       </div>
 
-      <p className="mt-6 text-center text-sm text-zinc-400">
+      <p className="mt-5 text-center text-sm text-zinc-400 md:mt-6">
         Don't have account?{' '}
-        <Link href="/register" className="text-white">
+        <Link href="/register" className="font-medium text-white hover:underline">
           Register
         </Link>
       </p>

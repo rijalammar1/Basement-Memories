@@ -6,12 +6,12 @@ interface Props {
 
 export default function ProfilePostGrid({ posts, onSelectPost }: Props) {
   return (
-    <div className="grid grid-cols-3 gap-5">
+    <div className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-5">
       {posts.map((post) => (
         <button
           key={post.id}
           onClick={() => onSelectPost(post)}
-          className="group aspect-square overflow-hidden rounded-2xl"
+          className="group aspect-square overflow-hidden rounded-xl md:rounded-2xl"
         >
           <img
             src={post.imageUrl}

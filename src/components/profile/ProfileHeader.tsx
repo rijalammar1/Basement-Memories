@@ -26,23 +26,24 @@ export default function ProfileHeader({
   const buttonText = loading ? 'Loading...' : following ? 'Unfollow' : 'Follow';
 
   return (
-    <div className="flex items-start gap-10 border-b border-zinc-800 pb-10">
+    <div className="flex flex-col items-center gap-6 border-b border-zinc-800 pb-8 text-center md:flex-row md:items-start md:gap-10 md:pb-10 md:text-left">
       {/* Avatar */}
       <img
         src={user?.profilePictureUrl || 'https://i.pravatar.cc/300'}
         alt="profile"
-        className="h-40 w-40 rounded-full object-cover"
+        className="h-28 w-28 rounded-full object-cover md:h-40 md:w-40"
       />
 
       {/* Info */}
       <div className="flex-1">
-        <div className="flex items-center gap-5">
-          <h1 className="text-4xl font-bold">{user?.name}</h1>
+        {/* Name + Button */}
+        <div className="flex flex-col items-center gap-4 md:flex-row md:gap-5">
+          <h1 className="text-2xl font-bold md:text-4xl">{user?.name || user?.username}</h1>
 
           {isOwner ? (
             <button
               onClick={onEdit}
-              className="rounded-xl bg-white px-5 py-2 font-semibold text-black transition hover:opacity-80"
+              className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition hover:opacity-80 md:px-5 md:text-base"
             >
               Edit Profile
             </button>
@@ -50,7 +51,7 @@ export default function ProfileHeader({
             <button
               onClick={handleFollow}
               disabled={loading}
-              className="rounded-xl bg-white px-5 py-2 font-semibold text-black transition hover:opacity-80 disabled:opacity-50"
+              className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition hover:opacity-80 disabled:opacity-50 md:px-5 md:text-base"
             >
               {buttonText}
             </button>
@@ -58,10 +59,10 @@ export default function ProfileHeader({
         </div>
 
         {/* Username */}
-        <p className="mt-2 text-lg text-zinc-400">@{user?.username}</p>
+        <p className="mt-2 text-sm text-zinc-400 md:text-lg">@{user?.username}</p>
 
         {/* Bio */}
-        {user?.bio && <p className="mt-5 text-zinc-300">{user.bio}</p>}
+        {user?.bio && <p className="mt-4 text-sm text-zinc-300 md:mt-5 md:text-base">{user.bio}</p>}
 
         {/* Website */}
         {user?.website && (
@@ -69,24 +70,27 @@ export default function ProfileHeader({
             href={user.website}
             target="_blank"
             rel="noreferrer"
-            className="mt-3 block text-blue-400 hover:underline"
+            className="mt-3 block text-sm break-all text-blue-400 hover:underline md:text-base"
           >
             {user.website}
           </a>
         )}
 
         {/* Stats */}
-        <div className="mt-6 flex gap-8">
+        <div className="mt-6 flex justify-center gap-6 text-sm md:justify-start md:gap-8 md:text-base">
           <div>
-            <span className="font-bold">{postsCount}</span> Posts
+            <span className="font-bold">{postsCount}</span>
+            <span className="ml-1">Posts</span>
           </div>
 
           <div>
-            <span className="font-bold">{followersCount}</span> Followers
+            <span className="font-bold">{followersCount}</span>
+            <span className="ml-1">Followers</span>
           </div>
 
           <div>
-            <span className="font-bold">{user?.totalFollowing ?? 0}</span> Following
+            <span className="font-bold">{user?.totalFollowing ?? 0}</span>
+            <span className="ml-1">Following</span>
           </div>
         </div>
       </div>

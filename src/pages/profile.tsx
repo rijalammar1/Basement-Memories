@@ -42,13 +42,10 @@ export default function ProfilePage({ user, posts }: ProfileProps) {
 
   return (
     <main className="flex min-h-screen bg-black text-white">
-      {/* SIDEBAR */}
       <Sidebar user={user} />
 
-      {/* CONTENT */}
-      <section className="flex-1 px-10 py-10">
+      <section className="flex-1 px-4 py-4 pb-28 md:px-10 md:py-10">
         <div className="mx-auto max-w-5xl">
-          {/* PROFILE HEADER */}
           <ProfileHeader
             user={user}
             postsCount={posts.length}
@@ -56,14 +53,12 @@ export default function ProfilePage({ user, posts }: ProfileProps) {
             isOwner={true}
           />
 
-          {/* POSTS */}
-          <div className="mt-10">
+          <div className="mt-6 md:mt-10">
             <ProfilePostGrid posts={posts} onSelectPost={setSelectedPost} />
           </div>
         </div>
       </section>
 
-      {/* POST MODAL */}
       {selectedPost && (
         <PostModal
           post={selectedPost}
@@ -73,7 +68,6 @@ export default function ProfilePage({ user, posts }: ProfileProps) {
         />
       )}
 
-      {/* EDIT PROFILE MODAL */}
       {openEditModal && (
         <EditProfileModal
           user={user}

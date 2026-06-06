@@ -14,45 +14,49 @@ export default function UpdatePostModal({
   onClose,
 }: UpdatePostModalProps) {
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-10">
-      <div className="relative flex h-[90vh] w-full max-w-6xl overflow-hidden rounded-3xl bg-zinc-950">
+    <div className="fixed inset-0 z-[60] bg-black/80 md:flex md:items-center md:justify-center md:p-10">
+      <div className="relative flex h-screen w-full flex-col overflow-hidden bg-zinc-950 md:h-[90vh] md:max-w-6xl md:flex-row md:rounded-3xl">
         {/* CLOSE */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 z-50 rounded-full bg-black/50 p-2 text-white transition hover:bg-black"
+          className="absolute top-4 right-4 z-50 rounded-full bg-black/50 p-2 text-white transition hover:bg-black"
         >
-          <IoClose size={26} />
+          <IoClose size={24} />
         </button>
 
         {/* LEFT */}
-        <div className="flex flex-1 items-center justify-center border-r border-zinc-800 bg-black p-8">
+        <div className="h-[40vh] bg-black md:flex-1 md:border-r md:border-zinc-800 md:p-8">
           {imageUrl ? (
-            <img src={imageUrl} alt="preview" className="h-full w-full rounded-3xl object-cover" />
+            <img
+              src={imageUrl}
+              alt="preview"
+              className="h-full w-full object-cover md:rounded-3xl"
+            />
           ) : (
-            <div className="flex h-full w-full items-center justify-center rounded-3xl border border-dashed border-zinc-700 bg-zinc-900">
+            <div className="flex h-full w-full items-center justify-center bg-zinc-900 md:rounded-3xl md:border md:border-dashed md:border-zinc-700">
               <div className="text-center">
-                <h2 className="text-2xl font-semibold">Image Preview</h2>
+                <h2 className="text-lg font-semibold md:text-2xl">Image Preview</h2>
 
-                <p className="mt-2 text-zinc-400">Paste image URL below</p>
+                <p className="mt-2 text-sm text-zinc-400 md:text-base">Paste image URL below</p>
               </div>
             </div>
           )}
         </div>
 
         {/* RIGHT */}
-        <div className="flex w-[420px] flex-col p-6">
+        <div className="flex flex-1 flex-col p-4 md:w-[420px] md:p-6">
           {/* USER */}
-          <div className="mb-6 flex items-center gap-4">
+          <div className="mb-4 flex items-center gap-3 md:mb-6 md:gap-4">
             <img
               src={user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
               alt="profile"
-              className="h-14 w-14 rounded-full object-cover"
+              className="h-12 w-12 rounded-full object-cover md:h-14 md:w-14"
             />
 
             <div>
-              <h2 className="font-semibold">{user?.name}</h2>
+              <h2 className="font-semibold">@{user?.username}</h2>
 
-              <p className="text-sm text-zinc-400">@{user?.username}</p>
+              <p className="text-sm text-zinc-400">Edit your post</p>
             </div>
           </div>
 
@@ -62,7 +66,7 @@ export default function UpdatePostModal({
             placeholder="https://example.com/image.jpg"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
-            className="rounded-2xl border border-zinc-700 bg-black px-5 py-4 transition outline-none focus:border-white"
+            className="rounded-2xl border border-zinc-700 bg-black px-4 py-3 outline-none focus:border-white md:px-5 md:py-4"
           />
 
           {/* CAPTION */}
@@ -70,11 +74,11 @@ export default function UpdatePostModal({
             placeholder="Write your caption..."
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
-            className="mt-6 h-[300px] resize-none rounded-2xl border border-zinc-800 bg-zinc-900 p-5 transition outline-none focus:border-zinc-600"
+            className="mt-4 h-[180px] resize-none rounded-2xl border border-zinc-800 bg-zinc-900 p-4 outline-none focus:border-zinc-600 md:mt-6 md:h-[300px] md:p-5"
           />
 
           {/* BUTTON */}
-          <div className="mt-auto pt-6">
+          <div className="mt-6 md:mt-auto md:pt-6">
             <Button title="Save Changes" onClick={onSave} />
           </div>
         </div>

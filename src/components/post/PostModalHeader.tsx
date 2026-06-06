@@ -1,24 +1,16 @@
 import { IoClose } from 'react-icons/io5';
-
 import { BsThreeDots } from 'react-icons/bs';
 
 import { Post, User } from '@/types/post';
 
 interface Props {
   post: Post;
-
   user: User | null;
-
   isOwner: boolean;
-
   showMenu: boolean;
-
   setShowMenu: (value: boolean) => void;
-
   setShowUpdateModal: (value: boolean) => void;
-
   handleDelete: () => void;
-
   onClose: () => void;
 }
 
@@ -32,23 +24,20 @@ export default function PostModalHeader({
   onClose,
 }: Props) {
   return (
-    <div className="flex items-center justify-between border-b border-zinc-800 p-5">
-      {/* USER */}
-      <div className="flex items-center gap-4">
+    <div className="flex items-center justify-between border-b border-zinc-800 p-4 md:p-5">
+      <div className="flex min-w-0 items-center gap-3 md:gap-4">
         <img
           src={post.user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
           alt="profile"
-          className="h-12 w-12 rounded-full object-cover"
+          className="h-10 w-10 rounded-full object-cover md:h-12 md:w-12"
         />
 
-        <div>
-          <p className="font-semibold">{post.user?.username}</p>
+        <div className="min-w-0">
+          <p className="truncate font-semibold">@{post.user?.username}</p>
         </div>
       </div>
 
-      {/* ACTION */}
-      <div className="flex items-center gap-2">
-        {/* ONLY OWNER */}
+      <div className="flex items-center gap-1 md:gap-2">
         {isOwner && (
           <div className="relative">
             <button
@@ -63,7 +52,6 @@ export default function PostModalHeader({
                 <button
                   onClick={() => {
                     setShowUpdateModal(true);
-
                     setShowMenu(false);
                   }}
                   className="w-full px-5 py-3 text-left text-white transition hover:bg-zinc-800"
@@ -82,12 +70,11 @@ export default function PostModalHeader({
           </div>
         )}
 
-        {/* CLOSE */}
         <button
           onClick={onClose}
           className="rounded-full p-2 text-white transition hover:bg-zinc-800"
         >
-          <IoClose size={24} />
+          <IoClose size={22} />
         </button>
       </div>
     </div>

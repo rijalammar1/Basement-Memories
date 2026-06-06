@@ -2,15 +2,10 @@ import { BsHeart, BsHeartFill } from 'react-icons/bs';
 
 interface Props {
   liked: boolean;
-
   likesCount: number;
-
   handleLike: () => void;
-
   comment: string;
-
   setComment: (value: string) => void;
-
   handleComment: () => void;
 }
 
@@ -23,18 +18,18 @@ export default function PostModalFooter({
   handleComment,
 }: Props) {
   return (
-    <div className="border-t border-zinc-800 p-5">
+    <div className="border-t border-zinc-800 p-4 md:p-5">
       {/* LIKE */}
-      <div className="mb-5 flex items-center gap-4">
+      <div className="mb-4 flex items-center gap-4 md:mb-5">
         <button onClick={handleLike} className="text-white transition hover:scale-110">
           {liked ? <BsHeartFill size={26} className="text-red-500" /> : <BsHeart size={26} />}
         </button>
 
-        <p className="text-sm text-zinc-400">{likesCount} like</p>
+        <p className="text-sm text-zinc-400">{likesCount} likes</p>
       </div>
 
       {/* COMMENT */}
-      <div className="flex gap-3">
+      <div className="flex flex-col gap-3 md:flex-row">
         <input
           type="text"
           value={comment}
@@ -45,7 +40,7 @@ export default function PostModalFooter({
 
         <button
           onClick={handleComment}
-          className="rounded-2xl bg-white px-5 py-3 font-semibold text-black transition hover:opacity-80"
+          className="rounded-2xl bg-white px-5 py-3 font-semibold text-black transition hover:opacity-80 md:w-auto"
         >
           Send
         </button>

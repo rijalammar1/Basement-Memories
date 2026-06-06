@@ -10,17 +10,15 @@ export default function PostCommentItem({ item }: Props) {
       <img
         src={item.user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
         alt="profile"
-        className="h-10 w-10 rounded-full object-cover"
+        className="h-9 w-9 flex-shrink-0 rounded-full object-cover md:h-10 md:w-10"
       />
 
-      <div>
-        <div className="flex items-center gap-2">
-          <p className="font-semibold">{item.user?.name}</p>
+      <div className="min-w-0 flex-1">
+        <p className="text-sm break-words text-zinc-300 md:text-base">
+          <span className="mr-2 font-semibold text-white">@{item.user?.username}</span>
 
-          <span className="text-sm text-zinc-500">@{item.user?.username}</span>
-        </div>
-
-        <p className="mt-1 text-zinc-300">{item.comment}</p>
+          {item.comment}
+        </p>
       </div>
     </div>
   );
