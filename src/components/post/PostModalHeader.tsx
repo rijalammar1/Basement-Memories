@@ -42,9 +42,7 @@ export default function PostModalHeader({
         />
 
         <div>
-          <h2 className="font-semibold text-white">{post.user?.name}</h2>
-
-          <p className="text-sm text-zinc-400">@{post.user?.username}</p>
+          <p className="font-semibold">{post.user?.username}</p>
         </div>
       </div>
 

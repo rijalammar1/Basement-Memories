@@ -49,7 +49,7 @@ export default function HomePage({ user, posts }: HomeProps) {
           <StoryBar />
 
           <div className="mt-6">
-            <FeedCard posts={filteredPosts} />
+            <FeedCard posts={filteredPosts} user={user} />
           </div>
         </div>
       </section>

@@ -2,9 +2,7 @@ import { Post } from '@/types/post';
 
 interface Props {
   post: Post;
-
   caption: string;
-
   comments: any[];
 }
 
@@ -19,14 +17,10 @@ export default function PostModalContent({ post, caption, comments }: Props) {
           className="h-10 w-10 rounded-full object-cover"
         />
 
-        <div>
-          <div className="flex items-center gap-2">
-            <p className="font-semibold">{post.user?.name}</p>
-
-            <span className="text-sm text-zinc-500">@{post.user?.username}</span>
-          </div>
-
-          <p className="mt-1 text-zinc-300">{caption}</p>
+        <div className="flex-1">
+          <p className="text-zinc-300">
+            <span className="font-semibold text-white">{post.user?.username}</span> {caption}
+          </p>
         </div>
       </div>
 
@@ -40,14 +34,11 @@ export default function PostModalContent({ post, caption, comments }: Props) {
               className="h-10 w-10 rounded-full object-cover"
             />
 
-            <div>
-              <div className="flex items-center gap-2">
-                <p className="font-semibold">{item.user?.name}</p>
-
-                <span className="text-sm text-zinc-500">@{item.user?.username}</span>
-              </div>
-
-              <p className="mt-1 text-zinc-300">{item.comment}</p>
+            <div className="flex-1">
+              <p className="text-zinc-300">
+                <span className="font-semibold text-white">{item.user?.username}</span>{' '}
+                {item.comment}
+              </p>
             </div>
           </div>
         ))}
