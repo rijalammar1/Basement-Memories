@@ -10,6 +10,8 @@ export interface ProfileHeaderProps {
   isFollowing?: boolean;
 
   onEdit?: () => void;
+
+  loggedUser?: any;
 }
 
 export interface EditProfileModalProps {
