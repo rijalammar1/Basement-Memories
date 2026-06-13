@@ -22,6 +22,17 @@ export const createPost = async (
   return response.data;
 };
 
+export const uploadFile = async (token: string, payload: FormData) => {
+  const response = await axios.post(`${apiURL}/api/v1/upload-image`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      apiKey: apiKEY || '',
+    },
+  });
+
+  return response.data;
+};
+
 export const getFollowingPosts = async (token: string) => {
   const response = await axios.get(`${apiURL}/api/v1/following-post?size=20&page=1`, {
     headers: {
@@ -119,6 +130,17 @@ export const createComment = async (
 
 export const deleteComment = async (token: string, commentId: string) => {
   const response = await axios.delete(`${apiURL}/api/v1/delete-comment/${commentId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      apiKey: apiKEY || '',
+    },
+  });
+
+  return response.data;
+};
+
+export const getExplorePosts = async (token: string, page: number = 1, size: number = 10) => {
+  const response = await axios.get(`${apiURL}/api/v1/explore-post?page=${page}&size=${size}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       apiKey: apiKEY || '',

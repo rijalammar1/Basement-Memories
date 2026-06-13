@@ -29,7 +29,7 @@ export default function ProfileHeader({
     <div className="flex flex-col items-center gap-6 border-b border-zinc-800 pb-8 text-center md:flex-row md:items-start md:gap-10 md:pb-10 md:text-left">
       {/* Avatar */}
       <img
-        src={user?.profilePictureUrl || 'https://i.pravatar.cc/300'}
+        src={user?.profilePictureUrl || '/images/default-avatar.png'}
         alt="profile"
         className="h-28 w-28 rounded-full object-cover md:h-40 md:w-40"
       />

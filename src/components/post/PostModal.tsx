@@ -30,15 +30,22 @@ export default function PostModal({ post, user, loggedUser, onClose }: PostModal
 
   return (
     <>
-      <div className="fixed inset-0 z-50 bg-black/80 md:flex md:items-center md:justify-center md:p-10">
-        <div className="relative flex h-screen w-full flex-col overflow-hidden bg-zinc-950 md:h-[90vh] md:max-w-6xl md:flex-row md:rounded-3xl">
+      <div className="fixed inset-0 z-50 bg-black/90 sm:flex sm:items-center sm:justify-center sm:p-6">
+        <div className="flex h-full w-full flex-col bg-zinc-950 sm:h-[90vh] sm:max-w-6xl sm:flex-row sm:overflow-hidden sm:rounded-3xl">
           {/* IMAGE */}
-          <div className="h-[40vh] bg-black md:h-auto md:flex-1">
-            <img src={modal.imageUrl} alt="post" className="h-full w-full object-cover" />
+          <div className="h-[35vh] shrink-0 bg-black sm:h-auto sm:flex-1">
+            <img
+              src={modal.imageUrl || '/images/default_image.png'}
+              alt="post"
+              onError={(e) => {
+                e.currentTarget.src = '/images/default_image.png';
+              }}
+              className="h-full w-full object-cover"
+            />
           </div>
 
-          {/* RIGHT SIDE */}
-          <div className="flex flex-1 flex-col border-t border-zinc-800 md:w-[420px] md:border-t-0 md:border-l">
+          {/* RIGHT */}
+          <div className="flex min-h-0 flex-1 flex-col sm:w-[420px] sm:border-l sm:border-zinc-800">
             <PostModalHeader
               post={post}
               user={user}
@@ -50,7 +57,9 @@ export default function PostModal({ post, user, loggedUser, onClose }: PostModal
               onClose={onClose}
             />
 
-            <PostModalContent post={post} caption={modal.caption} comments={modal.comments} />
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              <PostModalContent post={post} caption={modal.caption} comments={modal.comments} />
+            </div>
 
             <PostModalFooter
               liked={modal.liked}

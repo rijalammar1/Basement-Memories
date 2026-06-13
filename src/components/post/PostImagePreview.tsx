@@ -6,8 +6,11 @@ export default function PostImagePreview({ imageUrl }: Props) {
   if (imageUrl) {
     return (
       <img
-        src={imageUrl}
+        src={imageUrl || '/images/default_image.png'}
         alt="preview"
+        onError={(e) => {
+          e.currentTarget.src = '/images/default_image.png';
+        }}
         className="h-[250px] w-full rounded-2xl object-cover md:h-[500px] md:rounded-3xl"
       />
     );

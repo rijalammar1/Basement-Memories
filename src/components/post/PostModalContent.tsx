@@ -12,13 +12,13 @@ export default function PostModalContent({ post, caption, comments }: Props) {
       {/* CAPTION */}
       <div className="flex gap-3">
         <img
-          src={post.user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
+          src={post.user?.profilePictureUrl || '/images/default-avatar.png'}
           alt="profile"
-          className="h-9 w-9 flex-shrink-0 rounded-full object-cover md:h-10 md:w-10"
+          className="h-8 w-8 rounded-full object-cover md:h-10 md:w-10"
         />
 
         <div className="min-w-0 flex-1">
-          <p className="text-sm break-words text-zinc-300 md:text-base">
+          <p className="text-sm break-words text-zinc-300">
             <span className="mr-2 font-semibold text-white">@{post.user?.username}</span>
             {caption}
           </p>
@@ -30,13 +30,13 @@ export default function PostModalContent({ post, caption, comments }: Props) {
         {comments.map((item) => (
           <div key={item.id} className="flex gap-3">
             <img
-              src={item.user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
+              src={item.user?.profilePictureUrl || '/images/default-avatar.png'}
               alt="profile"
-              className="h-9 w-9 flex-shrink-0 rounded-full object-cover md:h-10 md:w-10"
+              className="h-8 w-8 rounded-full object-cover md:h-10 md:w-10"
             />
 
             <div className="min-w-0 flex-1">
-              <p className="text-sm break-words text-zinc-300 md:text-base">
+              <p className="text-sm break-words text-zinc-300">
                 <span className="mr-2 font-semibold text-white">@{item.user?.username}</span>
                 {item.comment}
               </p>

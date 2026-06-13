@@ -18,7 +18,7 @@ export default function PostModalFooter({
   handleComment,
 }: Props) {
   return (
-    <div className="border-t border-zinc-800 p-4 md:p-5">
+    <div className="border-t border-zinc-800 p-4">
       {/* LIKE */}
       <div className="mb-4 flex items-center gap-4 md:mb-5">
         <button onClick={handleLike} className="text-white transition hover:scale-110">
@@ -29,18 +29,18 @@ export default function PostModalFooter({
       </div>
 
       {/* COMMENT */}
-      <div className="flex flex-col gap-3 md:flex-row">
+      <div className="flex gap-2">
         <input
           type="text"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Write comment..."
-          className="flex-1 rounded-2xl bg-zinc-900 px-4 py-3 outline-none"
+          className="flex-1 rounded-xl bg-zinc-900 px-4 py-3 outline-none"
         />
 
         <button
           onClick={handleComment}
-          className="rounded-2xl bg-white px-5 py-3 font-semibold text-black transition hover:opacity-80 md:w-auto"
+          className="rounded-xl bg-white px-4 py-3 font-semibold text-black"
         >
           Send
         </button>

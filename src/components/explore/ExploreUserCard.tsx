@@ -14,7 +14,7 @@ export default function ExploreUserCard({ item, loading, onFollow }: Props) {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <Link href={`/users/${item.id}`} className="flex items-center gap-4">
           <img
-            src={item?.profilePictureUrl || 'https://i.pravatar.cc/150'}
+            src={item?.profilePictureUrl || '/images/default-avatar.png'}
             alt="profile"
             className="h-14 w-14 rounded-full object-cover md:h-16 md:w-16"
           />

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import toast from 'react-hot-toast';
 
-import { createPost } from '@/services/post.service';
+import { createPost, uploadFile } from '@/services/post.service';
 
 import { CreatePostPayload } from '@/types/post';
 
@@ -11,6 +11,43 @@ export default function useCreatePost() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = e.target.files?.[0];
+
+      if (!file) return;
+
+      const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
+
+      if (!token) {
+        toast.error('Unauthorized');
+        return;
+      }
+
+      setLoadingUpload(true);
+
+      const formData = new FormData();
+
+      formData.append('image', file);
+
+      const response = await uploadFile(token, formData);
+
+      setUploadedImageUrl(response.url);
+
+      toast.success('Image uploaded');
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'Upload failed');
+    } finally {
+      setLoadingUpload(false);
+    }
+  };
 
   const handleCreatePost = async (payload: CreatePostPayload) => {
     try {
@@ -48,5 +85,8 @@ export default function useCreatePost() {
   return {
     handleCreatePost,
     loading,
+    handleUpload,
+    loadingUpload,
+    uploadedImageUrl,
   };
 }

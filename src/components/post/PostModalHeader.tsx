@@ -24,16 +24,18 @@ export default function PostModalHeader({
   onClose,
 }: Props) {
   return (
-    <div className="flex items-center justify-between border-b border-zinc-800 p-4 md:p-5">
+    <div className="flex items-center justify-between border-b border-zinc-800 p-4">
       <div className="flex min-w-0 items-center gap-3 md:gap-4">
         <img
-          src={post.user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
+          src={post.user?.profilePictureUrl || '/images/default-avatar.png'}
           alt="profile"
-          className="h-10 w-10 rounded-full object-cover md:h-12 md:w-12"
+          className="h-10 w-10 rounded-full object-cover"
         />
 
         <div className="min-w-0">
-          <p className="truncate font-semibold">@{post.user?.username}</p>
+          <p className="max-w-[140px] truncate font-semibold sm:max-w-none">
+            @{post.user?.username}
+          </p>
         </div>
       </div>
 

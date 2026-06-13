@@ -29,10 +29,11 @@ export default function EditProfileForm({ form, handleChange }: Props) {
       />
 
       <input
+        type="url"
         name="website"
         value={form.website}
         onChange={handleChange}
-        placeholder="Website"
+        placeholder="https://yourwebsite.com"
         className="w-full rounded-xl bg-zinc-800 px-4 py-3 text-sm text-white transition outline-none focus:ring-2 focus:ring-white/20 md:rounded-2xl md:px-5 md:py-4 md:text-base"
       />
     </div>

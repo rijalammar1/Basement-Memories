@@ -33,7 +33,7 @@ export default function FeedCard({ posts, user }: FeedCardProps) {
 
               <div>
                 <Link
-                  href={`/user/${post.user?.id}`}
+                  href={`/users/${post.user?.id}`}
                   className="text-sm font-semibold hover:underline md:text-base"
                 >
                   @{post.user?.username}
@@ -44,8 +44,11 @@ export default function FeedCard({ posts, user }: FeedCardProps) {
             {/* IMAGE */}
             <button onClick={() => setSelectedPost(post)} className="block w-full">
               <img
-                src={post.imageUrl}
+                src={post.imageUrl || '/images/default_image.png'}
                 alt="post"
+                onError={(e) => {
+                  e.currentTarget.src = '/images/default_image.png';
+                }}
                 className="max-h-[500px] w-full object-cover md:max-h-[700px]"
               />
             </button>

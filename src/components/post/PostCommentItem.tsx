@@ -8,9 +8,9 @@ export default function PostCommentItem({ item }: Props) {
   return (
     <div className="flex gap-3">
       <img
-        src={item.user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
+        src={item.user?.profilePictureUrl || '/images/default-avatar.png'}
         alt="profile"
-        className="h-9 w-9 flex-shrink-0 rounded-full object-cover md:h-10 md:w-10"
+        className="h-10 w-10 rounded-full object-cover"
       />
 
       <div className="min-w-0 flex-1">

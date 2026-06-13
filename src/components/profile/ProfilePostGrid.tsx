@@ -14,8 +14,11 @@ export default function ProfilePostGrid({ posts, onSelectPost }: Props) {
           className="group aspect-square overflow-hidden rounded-xl md:rounded-2xl"
         >
           <img
-            src={post.imageUrl}
+            src={post.imageUrl || '/images/default_image.png'}
             alt="post"
+            onError={(e) => {
+              e.currentTarget.src = '/images/default_image.png';
+            }}
             className="h-full w-full object-cover transition duration-300 group-hover:scale-110"
           />
         </button>

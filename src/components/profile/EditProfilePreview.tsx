@@ -10,7 +10,7 @@ export default function EditProfilePreview({ name, username, profilePictureUrl }
   return (
     <div className="mb-6 flex flex-col items-center gap-4 text-center md:mb-8 md:flex-row md:gap-5 md:text-left">
       <img
-        src={profilePictureUrl || 'https://i.pravatar.cc/150'}
+        src={profilePictureUrl || '/images/default-avatar.png'}
         alt="profile"
         className="h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
       />

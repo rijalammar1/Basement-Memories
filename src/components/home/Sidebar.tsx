@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { FiHome, FiCompass, FiPlusSquare, FiUser } from 'react-icons/fi';
 import { MdOutlineAddCircle } from 'react-icons/md';
-
+import useLogout from '@/hooks/useLogout';
 import { User } from '@/types/post';
 
 interface SidebarProps {
@@ -10,6 +10,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ user }: SidebarProps) {
+  const { logout } = useLogout();
   const menus = [
     {
       name: 'Home',
@@ -41,7 +42,7 @@ export default function Sidebar({ user }: SidebarProps) {
   return (
     <aside className="fixed right-0 bottom-0 left-0 z-50 border-t border-zinc-800 bg-black md:sticky md:top-0 md:flex md:h-screen md:w-[280px] md:flex-col md:border-t-0 md:border-r md:p-6">
       {/* DESKTOP LOGO */}
-      <h1 className="hidden text-3xl font-bold md:mb-10 md:block">Photo App</h1>
+      <h1 className="hidden text-3xl font-bold md:mb-10 md:block">Basement Memories</h1>
 
       {/* MENU */}
       <nav className="flex items-center justify-around py-3 md:flex-1 md:flex-col md:items-stretch md:justify-start md:gap-2 md:py-0">
@@ -58,19 +59,29 @@ export default function Sidebar({ user }: SidebarProps) {
         ))}
       </nav>
 
-      {/* USER CARD */}
-      <div className="mt-auto hidden items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-4 md:flex">
-        <img
-          src={user?.profilePictureUrl || 'https://i.pravatar.cc/150'}
-          alt="profile"
-          className="h-14 w-14 rounded-full object-cover"
-        />
+      <div className="mt-auto hidden md:block">
+        {/* USER CARD */}
+        <div className="flex items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+          <img
+            src={user?.profilePictureUrl || '/images/default-avatar.png'}
+            alt="profile"
+            className="h-14 w-14 rounded-full object-cover"
+          />
 
-        <div>
-          <h2 className="font-semibold">{user?.name || user?.username || 'User'}</h2>
+          <div>
+            <h2 className="font-semibold">{user?.name || user?.username || 'User'}</h2>
 
-          <p className="text-sm text-zinc-400">@{user?.username || 'username'}</p>
+            <p className="text-sm text-zinc-400">@{user?.username || 'username'}</p>
+          </div>
         </div>
+
+        {/* LOGOUT */}
+        <button
+          onClick={logout}
+          className="mt-3 w-full rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 font-medium text-red-400 transition hover:bg-red-500/20"
+        >
+          Logout
+        </button>
       </div>
     </aside>
   );
