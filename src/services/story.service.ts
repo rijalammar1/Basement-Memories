@@ -1,9 +1,18 @@
 import api from '@/lib/api';
-
 import { CreateStoryPayload, Story } from '@/types/story';
 
 export async function createStory(payload: CreateStoryPayload) {
   const response = await api.post('/api/v1/create-story', payload);
+
+  return response.data;
+}
+
+export async function uploadStoryImage(file: File) {
+  const formData = new FormData();
+
+  formData.append('image', file);
+
+  const response = await api.post('/api/v1/upload-image', formData);
 
   return response.data;
 }

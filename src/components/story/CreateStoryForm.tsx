@@ -1,30 +1,26 @@
 import { useState } from 'react';
-
 import toast from 'react-hot-toast';
-
 import { IoClose } from 'react-icons/io5';
-
 import { useRouter } from 'next/router';
 
 import Button from '@/components/ui/Button';
-
 import useCreateStory from '@/hooks/useCreateStory';
 
 export default function CreateStoryForm() {
   const router = useRouter();
 
-  const { handleCreateStory, loading } = useCreateStory();
+  const { handleCreateStory, handleUpload, loading, loadingUpload, uploadedImageUrl } =
+    useCreateStory();
 
   const [caption, setCaption] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
 
   const handleSubmit = async () => {
-    if (!imageUrl.trim()) {
-      toast.error('Image URL required');
+    if (!uploadedImageUrl) {
+      toast.error('Image required');
       return;
     }
 
-    await handleCreateStory(imageUrl, caption);
+    await handleCreateStory(caption);
   };
 
   return (
@@ -43,24 +39,29 @@ export default function CreateStoryForm() {
 
       {/* CONTENT */}
       <div className="p-4 md:p-8">
-        {/* IMAGE URL */}
+        {/* IMAGE */}
         <div className="mb-5 md:mb-6">
-          <label className="mb-2 block text-sm md:text-base">Image URL</label>
+          <label className="mb-2 block text-sm md:text-base">Upload Image</label>
 
           <input
-            type="text"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            placeholder="https://..."
+            type="file"
+            accept="image/*"
+            onChange={handleUpload}
+            disabled={loadingUpload}
             className="w-full rounded-xl border border-zinc-700 bg-black px-4 py-3 text-sm outline-none md:rounded-2xl md:px-5 md:py-4 md:text-base"
           />
+
+          {loadingUpload && <p className="mt-3 text-sm text-zinc-400">Uploading image...</p>}
         </div>
 
         {/* PREVIEW */}
-        {imageUrl && (
+        {uploadedImageUrl && (
           <img
-            src={imageUrl}
+            src={uploadedImageUrl}
             alt="preview"
+            onError={(e) => {
+              e.currentTarget.src = '/images/default_img.png';
+            }}
             className="mb-5 h-[250px] w-full rounded-2xl object-cover md:mb-6 md:h-[500px] md:rounded-3xl"
           />
         )}
@@ -74,7 +75,12 @@ export default function CreateStoryForm() {
         />
 
         {/* BUTTON */}
-        <Button title="Create Story" loading={loading} onClick={handleSubmit} className="w-full" />
+        <Button
+          title="Create Story"
+          loading={loading || loadingUpload}
+          onClick={handleSubmit}
+          className="w-full"
+        />
       </div>
     </div>
   );

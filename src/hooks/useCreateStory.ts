@@ -1,32 +1,60 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
-
 import toast from 'react-hot-toast';
 
-import { useState } from 'react';
-
-import { createStory } from '@/services/story.service';
+import { createStory, uploadStoryImage } from '@/services/story.service';
 
 export default function useCreateStory() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState('');
 
-  const handleCreateStory = async (imageUrl: string, caption: string) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
+      const file = e.target.files?.[0];
+
+      if (!file) return;
+
+      setLoadingUpload(true);
+
+      const response = await uploadStoryImage(file);
+
+      setUploadedImageUrl(response.url);
+
+      toast.success('Image uploaded');
+    } catch (error) {
+      console.error(error);
+
+      toast.error('Failed upload image');
+    } finally {
+      setLoadingUpload(false);
+    }
+  };
+
+  const handleCreateStory = async (caption: string) => {
+    try {
+      if (!uploadedImageUrl) {
+        toast.error('Image required');
+
+        return;
+      }
+
       setLoading(true);
 
       await createStory({
-        imageUrl,
+        imageUrl: uploadedImageUrl,
         caption,
       });
 
       toast.success('Story created');
 
       router.push('/home');
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
 
-      toast.error('Failed create story');
+      toast.error(error?.response?.data?.message || 'Failed create story');
     } finally {
       setLoading(false);
     }
@@ -34,7 +62,9 @@ export default function useCreateStory() {
 
   return {
     loading,
-
+    loadingUpload,
+    uploadedImageUrl,
+    handleUpload,
     handleCreateStory,
   };
 }
