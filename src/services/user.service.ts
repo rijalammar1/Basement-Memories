@@ -14,6 +14,21 @@ export const getProfile = async (token: string) => {
   return response.data.data;
 };
 
+export const uploadProfileImage = async (token: string, file: File) => {
+  const formData = new FormData();
+
+  formData.append('image', file);
+
+  const response = await axios.post(`${apiURL}/api/v1/upload-image`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      apiKey: apiKEY || '',
+    },
+  });
+
+  return response.data;
+};
+
 export const getUserPosts = async (token: string, userId: string) => {
   const response = await axios.get(`${apiURL}/api/v1/users-post/${userId}?size=20&page=1`, {
     headers: {

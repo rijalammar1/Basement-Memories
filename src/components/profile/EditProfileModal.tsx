@@ -8,7 +8,15 @@ import EditProfilePreview from './EditProfilePreview';
 import EditProfileForm from './EditProfileForm';
 
 export default function EditProfileModal({ user, onClose, onSuccess }: EditProfileModalProps) {
-  const { form, loading, handleChange, handleSubmit } = useEditProfile({
+  const {
+    form,
+    loading,
+    loadingUpload,
+    uploadedImageUrl,
+    handleChange,
+    handleSubmit,
+    handleUpload,
+  } = useEditProfile({
     user,
     onClose,
     onSuccess,
@@ -33,11 +41,17 @@ export default function EditProfileModal({ user, onClose, onSuccess }: EditProfi
         <EditProfilePreview
           name={form.name}
           username={form.username}
-          profilePictureUrl={form.profilePictureUrl}
+          profilePictureUrl={uploadedImageUrl}
         />
 
         {/* FORM */}
-        <EditProfileForm form={form} handleChange={handleChange} />
+        <EditProfileForm
+          form={form}
+          uploadedImageUrl={uploadedImageUrl}
+          loadingUpload={loadingUpload}
+          handleUpload={handleUpload}
+          handleChange={handleChange}
+        />
 
         {/* ACTIONS */}
         <div className="mt-6 flex flex-col gap-3 md:mt-8 md:flex-row md:justify-end md:gap-4">
@@ -49,7 +63,11 @@ export default function EditProfileModal({ user, onClose, onSuccess }: EditProfi
           </button>
 
           <div className="w-full md:w-[140px]">
-            <Button title={loading ? 'Saving...' : 'Save'} onClick={handleSubmit} />
+            <Button
+              title={loading || loadingUpload ? 'Saving...' : 'Save'}
+              loading={loading || loadingUpload}
+              onClick={handleSubmit}
+            />
           </div>
         </div>
       </div>

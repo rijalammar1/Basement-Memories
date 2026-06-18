@@ -2,7 +2,8 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { getCookie } from 'cookies-next';
 
-import { updateProfile } from '@/services/user.service';
+import { updateProfile, uploadProfileImage } from '@/services/user.service';
+
 import { User } from '@/types/post';
 
 type Props = {
@@ -14,11 +15,14 @@ type Props = {
 export const useEditProfile = ({ user, onSuccess, onClose }: Props) => {
   const [loading, setLoading] = useState(false);
 
+  const [loadingUpload, setLoadingUpload] = useState(false);
+
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(user?.profilePictureUrl || '');
+
   const [form, setForm] = useState({
     name: user?.name || '',
     username: user?.username || '',
     email: user?.email || '',
-    profilePictureUrl: user?.profilePictureUrl || '',
     phoneNumber: user?.phoneNumber || '',
     bio: user?.bio || '',
     website: user?.website || '',
@@ -29,6 +33,36 @@ export const useEditProfile = ({ user, onSuccess, onClose }: Props) => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = e.target.files?.[0];
+
+      if (!file) return;
+
+      const token = getCookie('token');
+
+      if (!token) {
+        toast.error('Unauthorized');
+
+        return;
+      }
+
+      setLoadingUpload(true);
+
+      const response = await uploadProfileImage(String(token), file);
+
+      setUploadedImageUrl(response.url);
+
+      toast.success('Image uploaded');
+    } catch (error: any) {
+      console.error(error);
+
+      toast.error(error?.response?.data?.message || 'Failed upload image');
+    } finally {
+      setLoadingUpload(false);
+    }
   };
 
   const isValidWebsite = (url: string) => {
@@ -52,35 +86,12 @@ export const useEditProfile = ({ user, onSuccess, onClose }: Props) => {
 
       if (!token) {
         toast.error('Unauthorized');
+
         return;
       }
 
-      const errors: string[] = [];
-
-      if (!form.name.trim()) {
-        errors.push('Name is required');
-      }
-
-      if (!form.username.trim()) {
-        errors.push('Username is required');
-      }
-
-      if (!form.email.trim()) {
-        errors.push('Email is required');
-      }
-
-      if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-        errors.push('Email format is invalid');
-      }
-
       if (!isValidWebsite(form.website)) {
-        errors.push('Website must be a valid URL (https://example.com)');
-      }
-
-      if (errors.length > 0) {
-        toast.error(errors.join('\n'), {
-          duration: 5000,
-        });
+        toast.error('Website must be valid (https://example.com)');
 
         return;
       }
@@ -91,7 +102,7 @@ export const useEditProfile = ({ user, onSuccess, onClose }: Props) => {
         name: form.name,
         username: form.username,
         email: form.email,
-        profilePictureUrl: form.profilePictureUrl,
+        profilePictureUrl: uploadedImageUrl,
         phoneNumber: form.phoneNumber,
         bio: form.bio,
         website: form.website,
@@ -100,6 +111,7 @@ export const useEditProfile = ({ user, onSuccess, onClose }: Props) => {
       toast.success('Profile updated');
 
       onSuccess();
+
       onClose();
     } catch (error: any) {
       toast.error(error?.response?.data?.message || error?.message || 'Something went wrong');
@@ -111,6 +123,9 @@ export const useEditProfile = ({ user, onSuccess, onClose }: Props) => {
   return {
     form,
     loading,
+    loadingUpload,
+    uploadedImageUrl,
+    handleUpload,
     handleChange,
     handleSubmit,
   };

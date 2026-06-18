@@ -12,10 +12,6 @@ export const EDIT_PROFILE_FIELDS = [
     placeholder: 'Email',
   },
   {
-    name: 'profilePictureUrl',
-    placeholder: 'Profile Picture URL',
-  },
-  {
     name: 'phoneNumber',
     placeholder: 'Phone Number',
   },
