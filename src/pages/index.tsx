@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-
+import Image from 'next/image';
 export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-black px-5 text-white md:px-8">
@@ -55,8 +55,15 @@ export default function Home() {
           transition={{ delay: 0.2 }}
           className="flex justify-center lg:flex"
         >
-          <div className="flex h-[260px] w-[260px] items-center justify-center rounded-[32px] border border-zinc-700 bg-gradient-to-br from-zinc-900 to-zinc-800 shadow-2xl md:h-[340px] md:w-[340px] lg:h-[520px] lg:w-[420px] lg:rounded-[40px]">
-            <h2 className="text-4xl font-black md:text-5xl lg:text-6xl">BM.</h2>
+          <div className="overflow-hidden rounded-[32px] border border-zinc-700 shadow-2xl md:h-[340px] md:w-[340px] lg:h-[520px] lg:w-[420px] lg:rounded-[40px]">
+            <Image
+              src="/images/bm.jpg"
+              alt="Basement Memories"
+              width={420}
+              height={520}
+              className="h-full w-full object-cover"
+              priority
+            />
           </div>
         </motion.div>
       </div>
