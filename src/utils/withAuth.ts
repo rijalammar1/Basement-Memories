@@ -1,8 +1,10 @@
+import { GetServerSidePropsContext } from 'next';
+
 import { getToken } from './getToken';
 
 import { getUser } from '@/services/auth.service';
 
-export async function withAuth(context: any) {
+export async function withAuth(context: GetServerSidePropsContext) {
   try {
     const token = getToken(context);
 

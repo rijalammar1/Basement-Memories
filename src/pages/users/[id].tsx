@@ -5,20 +5,13 @@ import ProfileHeader from '@/components/profile/ProfileHeader';
 import ProfilePostGrid from '@/components/profile/ProfilePostGrid';
 import PostModal from '@/components/post/PostModal';
 
-import { withAuth } from '@/utils/withAuth';
+import { withPageAuth } from '@/utils/withPageAuth';
 
 import { getUserById, getUserPosts } from '@/services/user.service';
-
 import { getMyFollowing } from '@/services/follow.service';
 
-export async function getServerSideProps(context: any) {
-  const auth = await withAuth(context);
-
-  if ('redirect' in auth) {
-    return auth;
-  }
-
-  const { token, user } = auth.props;
+export const getServerSideProps = withPageAuth(async ({ props }, context) => {
+  const { token, user } = props;
 
   const { id } = context.params;
 
@@ -34,13 +27,14 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
+      ...props,
       loggedUser: user,
       targetUser,
       posts,
       isFollowing,
     },
   };
-}
+});
 
 interface Props {
   loggedUser: any;

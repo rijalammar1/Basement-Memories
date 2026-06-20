@@ -1,43 +1,41 @@
 import { useState } from 'react';
 
 import Sidebar from '@/components/home/Sidebar';
-
 import PostModal from '@/components/post/PostModal';
-
 import ProfileHeader from '@/components/profile/ProfileHeader';
-
 import ProfilePostGrid from '@/components/profile/ProfilePostGrid';
-
 import EditProfileModal from '@/components/profile/EditProfileModal';
 
-import { withAuth } from '@/utils/withAuth';
+import { withPageAuth } from '@/utils/withPageAuth';
 
 import { getUserPosts } from '@/services/user.service';
 
 import { Post, ProfileProps } from '@/types/post';
 
-export async function getServerSideProps(context: any) {
-  const auth = await withAuth(context);
-
-  if ('redirect' in auth) {
-    return auth;
-  }
-
+export const getServerSideProps = withPageAuth(async (auth) => {
   const { token, user } = auth.props;
 
-  const posts = await getUserPosts(token, user.id);
+  try {
+    const posts = await getUserPosts(token, user.id);
 
-  return {
-    props: {
-      user,
-      posts,
-    },
-  };
-}
+    return {
+      props: {
+        user,
+        posts,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        user,
+        posts: [],
+      },
+    };
+  }
+});
 
 export default function ProfilePage({ user, posts }: ProfileProps) {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-
   const [openEditModal, setOpenEditModal] = useState(false);
 
   return (

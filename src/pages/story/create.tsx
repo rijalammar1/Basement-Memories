@@ -1,11 +1,11 @@
 import Sidebar from '@/components/home/Sidebar';
 import CreateStoryForm from '@/components/story/CreateStoryForm';
 
-import { withAuth } from '@/utils/withAuth';
+import { withPageAuth } from '@/utils/withPageAuth';
 
 import { CreateProps } from '@/types/post';
 
-export const getServerSideProps = withAuth;
+export const getServerSideProps = withPageAuth();
 
 export default function CreateStoryPage({ user }: CreateProps) {
   return (

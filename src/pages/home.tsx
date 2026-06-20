@@ -3,37 +3,31 @@ import StoryBar from '@/components/home/Stories';
 import FeedCard from '@/components/home/FeedCard';
 import Topbar from '@/components/home/Topbar';
 
-import { withAuth } from '@/utils/withAuth';
+import { withPageAuth } from '@/utils/withPageAuth';
 
 import { getFollowingPosts } from '@/services/post.service';
 
 import { HomeProps } from '@/types/home';
 
-export async function getServerSideProps(context: any) {
-  const auth = await withAuth(context);
-
-  if ('redirect' in auth) {
-    return auth;
-  }
-
+export const getServerSideProps = withPageAuth(async (auth) => {
   try {
     const posts = await getFollowingPosts(auth.props.token);
 
     return {
       props: {
-        user: auth.props.user,
+        ...auth.props,
         posts,
       },
     };
   } catch (error) {
     return {
       props: {
-        user: auth.props.user,
+        ...auth.props,
         posts: [],
       },
     };
   }
-}
+});
 
 export default function HomePage({ user, posts }: HomeProps) {
   const filteredPosts = posts.filter((post) => post.imageUrl);

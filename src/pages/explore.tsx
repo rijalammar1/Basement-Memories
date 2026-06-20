@@ -7,6 +7,10 @@ import ExplorePostGrid from '@/components/explore/ExplorePostGrid';
 import useExplore from '@/hooks/useExplore';
 import useExplorePosts from '@/hooks/useExplorePosts';
 
+import { withPageAuth } from '@/utils/withPageAuth';
+
+export const getServerSideProps = withPageAuth();
+
 export default function ExplorePage() {
   const { user, keyword, filteredUsers, loading, handleSearch, handleFollow } = useExplore();
 
