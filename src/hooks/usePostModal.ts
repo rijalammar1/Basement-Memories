@@ -1,7 +1,5 @@
 import { useState } from 'react';
-
 import toast from 'react-hot-toast';
-
 import { getCookie } from 'cookies-next';
 
 import {
@@ -10,15 +8,14 @@ import {
   likePost,
   unlikePost,
   createComment,
+  uploadFile,
 } from '@/services/post.service';
 
 import { Post, User } from '@/types/post';
 
 interface UsePostModalProps {
   post: Post;
-
   user: User | null;
-
   loggedUser?: User | null;
 }
 
@@ -31,10 +28,12 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
 
   const [imageUrl, setImageUrl] = useState(post.imageUrl);
 
+  const [loadingUpload, setLoadingUpload] = useState(false);
+
   /*
     LIKE STATE
   */
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(post.isLiked || false);
 
   const [likesCount, setLikesCount] = useState(post.likesCount || 0);
 
@@ -54,7 +53,6 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
 
       if (!token) {
         toast.error('Unauthorized');
-
         return;
       }
 
@@ -73,6 +71,51 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
   };
 
   /*
+    UPLOAD IMAGE
+  */
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const token = getCookie('token');
+
+      if (!token) {
+        toast.error('Unauthorized');
+        return;
+      }
+
+      const file = e.target.files?.[0];
+
+      if (!file) return;
+
+      setLoadingUpload(true);
+
+      const formData = new FormData();
+
+      formData.append('image', file);
+
+      const response = await uploadFile(String(token), formData);
+
+      console.log('UPLOAD RESPONSE:', response);
+
+      const uploadedUrl = response?.data?.url || response?.url || '';
+
+      if (!uploadedUrl) {
+        toast.error('Image URL not found');
+        return;
+      }
+
+      setImageUrl(uploadedUrl);
+
+      toast.success('Image uploaded');
+    } catch (error: any) {
+      console.log(error);
+
+      toast.error('Failed upload image');
+    } finally {
+      setLoadingUpload(false);
+    }
+  };
+
+  /*
     UPDATE POST
   */
   const handleUpdate = async () => {
@@ -81,13 +124,16 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
 
       if (!token) {
         toast.error('Unauthorized');
-
         return;
       }
 
-      if (!caption.trim() || !imageUrl.trim()) {
-        toast.error('Caption & Image URL required');
+      if (!caption.trim()) {
+        toast.error('Caption required');
+        return;
+      }
 
+      if (!imageUrl.trim()) {
+        toast.error('Image required');
         return;
       }
 
@@ -96,7 +142,7 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
         imageUrl,
       });
 
-      toast.success('Post updated successfully');
+      toast.success('Post updated');
 
       setShowUpdateModal(false);
 
@@ -119,13 +165,9 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
 
       if (!token) {
         toast.error('Unauthorized');
-
         return;
       }
 
-      /*
-        UNLIKE
-      */
       if (liked) {
         await unlikePost(String(token), post.id);
 
@@ -136,9 +178,6 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
         return;
       }
 
-      /*
-        LIKE
-      */
       await likePost(String(token), post.id);
 
       setLiked(true);
@@ -147,10 +186,6 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
     } catch (error: any) {
       console.log(error?.response?.data || error.message);
 
-      /*
-        Kalau backend bilang already liked
-        tetap bikin UI jadi liked
-      */
       if (error?.response?.data?.message?.toLowerCase().includes('already liked')) {
         setLiked(true);
 
@@ -172,13 +207,11 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
 
       if (!token) {
         toast.error('Unauthorized');
-
         return;
       }
 
       if (!comment.trim()) {
         toast.error('Comment required');
-
         return;
       }
 
@@ -187,9 +220,6 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
         comment,
       });
 
-      /*
-        OPTIMISTIC COMMENT
-      */
       const newComment = {
         id: Date.now(),
 
@@ -200,7 +230,7 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
 
           username: loggedUser?.username || 'unknown',
 
-          profilePictureUrl: loggedUser?.profilePictureUrl || 'https://i.pravatar.cc/150',
+          profilePictureUrl: loggedUser?.profilePictureUrl || '/images/default-avatar.png',
         },
       };
 
@@ -228,6 +258,9 @@ export default function usePostModal({ post, user, loggedUser }: UsePostModalPro
 
     imageUrl,
     setImageUrl,
+
+    loadingUpload,
+    handleUpload,
 
     handleDelete,
     handleUpdate,

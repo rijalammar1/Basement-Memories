@@ -81,6 +81,8 @@ export default function PostModal({ post, user, loggedUser, onClose }: PostModal
           imageUrl={modal.imageUrl}
           setCaption={modal.setCaption}
           setImageUrl={modal.setImageUrl}
+          handleUpload={modal.handleUpload}
+          loadingUpload={modal.loadingUpload}
           onSave={modal.handleUpdate}
           onClose={() => modal.setShowUpdateModal(false)}
         />

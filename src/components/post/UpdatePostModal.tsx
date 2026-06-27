@@ -9,7 +9,8 @@ export default function UpdatePostModal({
   caption,
   imageUrl,
   setCaption,
-  setImageUrl,
+  handleUpload,
+  loadingUpload,
   onSave,
   onClose,
 }: UpdatePostModalProps) {
@@ -40,7 +41,7 @@ export default function UpdatePostModal({
               <div className="text-center">
                 <h2 className="text-lg font-semibold md:text-2xl">Image Preview</h2>
 
-                <p className="mt-2 text-sm text-zinc-400 md:text-base">Paste image URL below</p>
+                <p className="mt-2 text-sm text-zinc-400 md:text-base">Upload image below</p>
               </div>
             </div>
           )}
@@ -55,6 +56,7 @@ export default function UpdatePostModal({
               alt="profile"
               className="h-14 w-14 rounded-full object-cover"
             />
+
             <div>
               <h2 className="font-semibold">@{user?.username}</h2>
 
@@ -62,14 +64,15 @@ export default function UpdatePostModal({
             </div>
           </div>
 
-          {/* IMAGE URL */}
+          {/* FILE */}
           <input
-            type="text"
-            placeholder="https://example.com/image.jpg"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            type="file"
+            accept="image/*"
+            onChange={handleUpload}
             className="rounded-2xl border border-zinc-700 bg-black px-4 py-3 outline-none focus:border-white md:px-5 md:py-4"
           />
+
+          {loadingUpload && <p className="mt-2 text-sm text-zinc-400">Uploading image...</p>}
 
           {/* CAPTION */}
           <textarea
@@ -81,7 +84,11 @@ export default function UpdatePostModal({
 
           {/* BUTTON */}
           <div className="mt-6 md:mt-auto md:pt-6">
-            <Button title="Save Changes" onClick={onSave} />
+            <Button
+              title={loadingUpload ? 'Uploading...' : 'Save Changes'}
+              loading={loadingUpload}
+              onClick={onSave}
+            />
           </div>
         </div>
       </div>

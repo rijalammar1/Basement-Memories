@@ -93,6 +93,10 @@ export interface UpdatePostModalProps {
 
   setImageUrl: (value: string) => void;
 
+  handleUpload: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+
+  loadingUpload: boolean;
+
   onSave: () => void;
 
   onClose: () => void;
