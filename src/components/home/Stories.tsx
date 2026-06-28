@@ -22,9 +22,12 @@ export default function Stories() {
         >
           <div className="rounded-full bg-gradient-to-tr from-pink-500 to-purple-500 p-[3px]">
             <img
-              src={story.user?.profilePictureUrl}
+              src={story.user?.profilePictureUrl || '/images/default-avatar.png'}
               alt={story.user?.username}
-              className="h-12 w-12 rounded-full border-2 border-black object-cover md:h-16 md:w-16"
+              className="h-10 w-10 rounded-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = '/images/default-avatar.png';
+              }}
             />
           </div>
 
