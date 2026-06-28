@@ -26,9 +26,12 @@ export default function FeedCard({ posts, user }: FeedCardProps) {
             {/* HEADER */}
             <div className="flex items-center gap-3 p-4 md:p-5">
               <img
-                src={post.user?.profilePictureUrl}
+                src={post.user?.profilePictureUrl || '/images/default-avatar.png'}
                 alt="profile"
                 className="h-10 w-10 rounded-full object-cover md:h-12 md:w-12"
+                onError={(e) => {
+                  e.currentTarget.src = '/images/default-avatar.png';
+                }}
               />
 
               <div>
